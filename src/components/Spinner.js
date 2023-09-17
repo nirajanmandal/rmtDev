@@ -1,4 +1,4 @@
-import { spinnerSearchEl, spinnerJobDetailsEl } from "../common";
+import { spinnerSearchEl, spinnerJobDetailsEl } from "../common.js";
 
 const renderSpinner = (whichSpinner) => {
   const spinnerEl =
