@@ -1,5 +1,13 @@
 export const BASE_API_URL = "https://bytegrad.com/course-assets/js/2/api";
 export const DEFAULT_DISPLAY_TIME = 3500;
+export const RESULTS_PER_PAGE = 7;
+
+export const state = {
+  searchJobItems: [],
+  bookmarkJobItems: [],
+  activeJobItem: {},
+  currentPage: 1,
+};
 
 export const bookmarksBtnEl = document.querySelector(".bookmarks-btn");
 export const errorEl = document.querySelector(".error");
@@ -46,5 +54,5 @@ export const getData = async (completeURL) => {
   if (!response.ok) {
     throw new Error(data.description);
   }
-  return data
+  return data;
 };

@@ -5,10 +5,14 @@ import {
   numberEl,
   BASE_API_URL,
   getData,
+  state,
+  sortingBtnRecentEl,
+  sortingBtnRelevantEl,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderError from "./Error.js";
 import renderJobList from "./JobList.js";
+import renderPaginationButtons from "./Pagination.js";
 
 const submitHandler = async (event) => {
   event.preventDefault();
@@ -22,15 +26,21 @@ const submitHandler = async (event) => {
     return;
   }
   searchInputEl.blur();
-  jobListSearchEl.textContent = "";
+  jobListSearchEl.innerHTML = "";
+
+  sortingBtnRecentEl.classList.remove("sorting__button--active");
+  sortingBtnRelevantEl.classList.add("sorting__button--active");
   renderSpinner("search");
 
   try {
     const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
     const { jobItems } = data;
+    state.searchJobItems = jobItems;
+    state.currentPage = 1;
     renderSpinner("search");
     numberEl.textContent = jobItems.length;
-    renderJobList(jobItems);
+    renderPaginationButtons();
+    renderJobList();
   } catch (error) {
     renderSpinner("search");
     renderError(error.message);
